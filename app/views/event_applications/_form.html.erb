@@ -1,6 +1,6 @@
 <%
 =begin%>
-    This file is for the applicants of the hackathon and displays the form for a person's application within the browser. 
+    This file is for the applicants of the hackathon and displays the form for a person's application within the browser.
     It prompts the user for their information and collects it like name or age etc.
     It also includes the event waiver liability agreement.
     Before an applicant can fill out the application it ensures that the user doesn't have javascript disabled.
@@ -9,11 +9,6 @@
 <script>
 window.MIN_RESUME_AGE = <%= HackumassWeb::Application::EVENT_APPLICATION_OPTIONS['min_resume_age'] or 0 %>;
 </script>
-<style>
-.resume-optional:after {
-  content: ' (Note: this is optional because you are under age <%= HackumassWeb::Application::EVENT_APPLICATION_OPTIONS['min_resume_age'] or 0 %>.) ';
-}
-</style>
 <div class="card-body">
   <noscript>
     Hello, <%= current_user.first_name %>! Wow, you're clearly an next-level haxor
@@ -54,7 +49,7 @@ window.MIN_RESUME_AGE = <%= HackumassWeb::Application::EVENT_APPLICATION_OPTIONS
                     'Age:',
                     class: 'form-label event-application-required-field' %>
         <%= f.select :age,
-                     (14..50).map { |i| i.to_s},
+                     (17..50).map { |i| i.to_s},
                      {include_blank: true},
                      {class: 'form-control custom-select', 'onblur': 'updateAge()', 'onchange': 'updateAge()'} %>
       </div>
@@ -84,7 +79,7 @@ window.MIN_RESUME_AGE = <%= HackumassWeb::Application::EVENT_APPLICATION_OPTIONS
                     'What\'s your education level?',
                     class: 'form-label event-application-required-field' %>
         <%= f.select :education_lvl,
-                     ['High School Student', 'College Freshman', 'College Sophomore', 'College Junior', 'College Senior', 'Masters', 'PhD', 'Post-Graduation'],
+                     ['College Freshman', 'College Sophomore', 'College Junior', 'College Senior', 'Masters', 'PhD', 'Post-Graduation'],
                      {include_blank: true},
                      {class: 'form-control custom-select'} %>
       </div>
@@ -96,7 +91,7 @@ window.MIN_RESUME_AGE = <%= HackumassWeb::Application::EVENT_APPLICATION_OPTIONS
 
         <%= f.text_field :university,
                          class: 'form-control',
-                         placeholder: 'Enter your University or High School',
+                         placeholder: 'Enter your University',
                          data: {autocomplete: autocomplete_university_name_event_applications_path}%>
       </div>
 
@@ -107,7 +102,7 @@ window.MIN_RESUME_AGE = <%= HackumassWeb::Application::EVENT_APPLICATION_OPTIONS
 
         <%= f.text_field :major,
                          class: 'form-control',
-                         placeholder: 'Please list your major or N/A if you are still in High School',
+                         placeholder: 'Please list your major.',
                          data: {autocomplete: autocomplete_major_name_event_applications_path} %>
       </div>
 
@@ -225,7 +220,7 @@ window.MIN_RESUME_AGE = <%= HackumassWeb::Application::EVENT_APPLICATION_OPTIONS
         </div>
       <% end %>
 
-      <% unless HackumassWeb::Application::EVENT_APPLICATION_OPTIONS['hide_event_toc'] %>  
+      <% unless HackumassWeb::Application::EVENT_APPLICATION_OPTIONS['hide_event_toc'] %>
         <div class="form-group event-application-form-group">
           <%= f.label :waiver_liability_agreement,
                       "Please agree to the following Terms & Conditions for #{HackumassWeb::Application::HACKATHON_NAME} #{HackumassWeb::Application::HACKATHON_VERSION}:",
@@ -235,7 +230,7 @@ window.MIN_RESUME_AGE = <%= HackumassWeb::Application::EVENT_APPLICATION_OPTIONS
         </div>
       <% end %>
 
-      <% unless HackumassWeb::Application::EVENT_APPLICATION_OPTIONS['hide_mlh_toc'] %>  
+      <% unless HackumassWeb::Application::EVENT_APPLICATION_OPTIONS['hide_mlh_toc'] %>
         <div class="form-group event-application-form-group">
           <%= f.label :mlh_agreement,
                       'Please agree to the following MLH Terms & Conditions:',
