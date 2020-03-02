@@ -34,11 +34,11 @@ namespace :teams do
 
         # Q2
         q2 = app['custom_fields']['personality_crowd']
-        if q1 == 'Back'
+        if q2 == 'My personal bubble is at least 5 ft wide'
 
-        elsif q1 == 'Middle'
+        elsif q2 == 'I don\'t really care'
 
-        elsif q1 == 'Front'
+        elsif q2 == 'Yay! People!'
 
         else
 
@@ -47,11 +47,11 @@ namespace :teams do
         # Q3
         q3 = app['custom_fields']['personality_assignments']
 
-        if q1 == 'Back'
+        if q3 == 'The minute the professor announces it in class'
 
-        elsif q1 == 'Middle'
+        elsif q3 == '2 days before it was assigned'
 
-        elsif q1 == 'Front'
+        elsif q3 == 'Right before class starts'
 
         else
 
@@ -60,11 +60,11 @@ namespace :teams do
         # Q4
         q4 = app['custom_fields']['personality_icecream']
 
-        if q1 == 'Back'
+        if q4 == 'The same thing I always get'
 
-        elsif q1 == 'Middle'
+        elsif q4 == 'The craziest, most colorful, flavor they have'
 
-        elsif q1 == 'Front'
+        elsif q4 == 'Depends on my mood'
 
         else
 
@@ -73,11 +73,11 @@ namespace :teams do
         # Q5
         q5 = app['custom_fields']['personality_hackathons']
 
-        if q1 == 'Back'
+        if q5 == 'Hacking'
 
-        elsif q1 == 'Middle'
+        elsif q5 == 'Free stuff'
 
-        elsif q1 == 'Front'
+        elsif q5 == 'Workshops'
 
         else
 
