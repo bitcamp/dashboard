@@ -1,3 +1,3 @@
 [submodule "hackathon-config"]
 	path = hackathon-config
-	url = https://github.com/bitcamp/bitcamp-dashboard-config.git
+	url = git@github.com:bitcamp/bitcamp-dashboard-config.git
