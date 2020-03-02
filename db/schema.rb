@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_28_031347) do
+ActiveRecord::Schema.define(version: 2020_03_02_194247) do
 
   create_table "custom_rsvps", force: :cascade do |t|
     t.json "answers"
@@ -198,9 +198,9 @@ ActiveRecord::Schema.define(version: 2020_01_28_031347) do
     t.boolean "power"
     t.integer "table_id"
     t.string "youtube_link"
-    t.json "tech", default: "\"\\\"\\\\\\\"[]\\\\\\\"\\\"\""
-    t.json "prizes", default: "\"\\\"\\\\\\\"[]\\\\\\\"\\\"\""
-    t.json "prizes_won", default: "\"\\\"\\\\\\\"[]\\\\\\\"\\\"\""
+    t.json "tech", default: []
+    t.json "prizes", default: []
+    t.json "prizes_won", default: []
   end
 
   create_table "universities", force: :cascade do |t|
@@ -229,6 +229,7 @@ ActiveRecord::Schema.define(version: 2020_01_28_031347) do
     t.boolean "check_in", default: false
     t.integer "project_id"
     t.string "slack_id"
+    t.string "team"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
