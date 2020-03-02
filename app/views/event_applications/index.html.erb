@@ -18,7 +18,7 @@
           </div>
         </div>
         <% if Rails.env.development? %>
-          Chart will only render in production and staging
+          <%= line_chart @check_in_chart %>
         <% else %>
           <%= line_chart @check_in_chart %>
         <% end %>
@@ -37,7 +37,7 @@
           </div>
         </div>
         <% if Rails.env.development? %>
-          Chart will only render in production and staging
+          <%= line_chart @reg_chart %>
         <% else %>
           <%= line_chart @reg_chart %>
         <% end %>
@@ -56,7 +56,7 @@
           </div>
         </div>
         <% if Rails.env.development? %>
-          Chart will only render in production and staging
+          <%= line_chart @app_chart %>
         <% else %>
           <%= line_chart @app_chart %>
         <% end %>
@@ -76,7 +76,7 @@
           </div>
         </div>
         <% if Rails.env.development? %>
-          Chart will only render in production and staging
+          <%= line_chart @rsvp_chart %>
         <% else %>
           <%= line_chart @rsvp_chart %>
         <% end %>
@@ -179,7 +179,7 @@
                       <% end %>
                           <%= form.status.capitalize %>
                         </span>
-                      
+
                       <% if form.flag %>
                         <span class="tag tag-danger event-application-header-status-margin">
                           Flagged
