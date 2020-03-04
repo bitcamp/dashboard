@@ -3,16 +3,32 @@ namespace :teams do
 
 
   task :assign_teams => :environment do
-    puts "id, red, blue, green"
+    #puts "id, red, blue, green"
     @users = User.all
     count = 0
+    prev = 0
     r_count = 0
     g_count = 0
     b_count = 0
 
+
     @users.each do |user|
       if user.has_applied? == true
         count += 1
+
+        if user.team == "red"
+          r_count += 1
+          prev += 1
+          next
+        elsif user.team == "blue"
+          b_count += 1
+          prev += 1
+          next
+        elsif user.team == "green"
+          g_count += 1
+          prev += 1
+          next
+        end
 
         rs = 0
         gs = 0
@@ -83,29 +99,62 @@ namespace :teams do
         elsif q5 == 'Workshops'
           bs += 1
         else
-
-        end
-
-        # assign team based on highest score
-        if rs > gs && rs > bs
-          r_count += 1
-        elsif gs > rs && gs > bs
-          g_count += 1
-        elsif bs > rs && bs > gs
-          b_count += 1
-        else
           rs += 1
         end
 
-        puts "#{user.id}, #{rs}, #{bs}, #{gs}"
+        # assign team based on highest score, if there's a clear winner
+        if rs > gs && rs > bs
+          r_count += 1
+          user.team = "red"
+        elsif gs > rs && gs > bs
+          g_count += 1
+          user.team = "green"
+        elsif bs > rs && bs > gs
+          b_count += 1
+          user.team = "blue"
+        else
+
+        # pass 2
+        if rs == bs && rs != gs
+          if r_count <= b_count
+            r_count += 1
+            user.team = "red"
+          else
+            b_count += 1
+            user.team = "blue"
+          end
+        elsif rs == gs && rs != bs
+          if r_count <= g_count
+            r_count += 1
+            user.team = "red"
+          else
+            g_count += 1
+            user.team = "green"
+          end
+        elsif gs == bs && gs != rs
+          if g_count <= b_count
+            g_count += 1
+            user.team = "green"
+          else
+            b_count += 1
+            user.team = "blue"
+          end
+        else
+
+        end
+
+
+        end
+        user.save(:validate => false)
       end
     end
 
-    #puts "#{r_count} assigned to red"
-    #puts "#{b_count} assigned to blue"
-    #puts "#{g_count} assigned to green"
-    #puts "#{count - r_count - b_count - g_count} unassigned"
-    #puts "#{count} total"
+    puts "#{r_count} assigned to red"
+    puts "#{b_count} assigned to blue"
+    puts "#{g_count} assigned to green"
+    puts "#{count - r_count - b_count - g_count} unassigned"
+    puts "#{prev} unchanged"
+    puts "#{count} total"
 
   end
 
