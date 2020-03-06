@@ -10,6 +10,8 @@ namespace :restore do
 
             @application = EventApplication.new(x)
             @application.user = user
+            @application.status = 'undecided'
+            @application.save
             puts "Restored #{user.email}"
         end
     end
