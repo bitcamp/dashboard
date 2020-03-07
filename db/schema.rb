@@ -11,13 +11,17 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2020_03_02_194247) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "custom_rsvps", force: :cascade do |t|
     t.json "answers"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_custom_rsvps_on_user_id"
   end
 
-  create_table "emails", force: :cascade do |t|
+  create_table "emails", id: :serial, force: :cascade do |t|
     t.string "subject"
     t.string "message"
     t.string "mailing_list"
@@ -62,7 +66,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_194247) do
     t.boolean "checked_in"
   end
 
-  create_table "events", force: :cascade do |t|
+  create_table "events", id: :serial, force: :cascade do |t|
     t.string "title"
     t.string "description"
     t.string "location"
@@ -86,8 +90,8 @@ ActiveRecord::Schema.define(version: 2020_03_02_194247) do
   end
 
   create_table "hardware_checkout_logs", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "hardware_item_id"
+    t.bigint "user_id"
+    t.bigint "hardware_item_id"
     t.string "action"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -96,7 +100,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_194247) do
     t.index ["user_id"], name: "index_hardware_checkout_logs_on_user_id"
   end
 
-  create_table "hardware_checkouts", force: :cascade do |t|
+  create_table "hardware_checkouts", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
@@ -105,7 +109,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_194247) do
     t.index ["user_id"], name: "index_hardware_checkouts_on_user_id"
   end
 
-  create_table "hardware_items", force: :cascade do |t|
+  create_table "hardware_items", id: :serial, force: :cascade do |t|
     t.integer "upc"
     t.string "name"
     t.string "link"
@@ -134,22 +138,22 @@ ActiveRecord::Schema.define(version: 2020_03_02_194247) do
     t.index ["user_id", "project_id", "tag"], name: "index_judging_assignments_on_user_id_and_project_id_and_tag", unique: true
   end
 
-  create_table "majors", force: :cascade do |t|
+  create_table "majors", id: :serial, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "mentorship_notifications", force: :cascade do |t|
-    t.integer "user_id"
-    t.json "tech", default: []
+    t.bigint "user_id"
+    t.json "tech", default: [], array: true
     t.boolean "all"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_mentorship_notifications_on_user_id"
   end
 
-  create_table "mentorship_requests", force: :cascade do |t|
+  create_table "mentorship_requests", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "mentor_id"
     t.string "title"
@@ -158,7 +162,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_194247) do
     t.datetime "updated_at", null: false
     t.integer "urgency"
     t.string "description"
-    t.string "tech", default: "{}"
+    t.string "tech", default: [], array: true
     t.string "screenshot_file_name"
     t.string "screenshot_content_type"
     t.integer "screenshot_file_size"
@@ -197,18 +201,18 @@ ActiveRecord::Schema.define(version: 2020_03_02_194247) do
     t.boolean "power"
     t.integer "table_id"
     t.string "youtube_link"
-    t.json "tech", default: []
-    t.json "prizes", default: []
-    t.json "prizes_won", default: []
+    t.json "tech", default: [], array: true
+    t.json "prizes", default: [], array: true
+    t.json "prizes_won", default: [], array: true
   end
 
-  create_table "universities", force: :cascade do |t|
+  create_table "universities", id: :serial, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :serial, force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "email", default: "", null: false
@@ -228,11 +232,18 @@ ActiveRecord::Schema.define(version: 2020_03_02_194247) do
     t.boolean "check_in", default: false
     t.integer "project_id"
     t.string "slack_id"
-    t.string "team"
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
     t.json "tokens"
+    t.string "team"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "custom_rsvps", "users"
+  add_foreign_key "hardware_checkout_logs", "hardware_items"
+  add_foreign_key "hardware_checkout_logs", "users"
+  add_foreign_key "hardware_checkouts", "hardware_items"
+  add_foreign_key "hardware_checkouts", "users"
+  add_foreign_key "mentorship_notifications", "users"
 end

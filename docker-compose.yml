@@ -1,0 +1,18 @@
+version: "2.0"
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_DB=dashboard
+    volumes:
+      - ./db/postgres:/var/lib/postgresql/data
+    ports:
+      - 5433:5433
+  dashboard:
+    build: .
+    links:
+      - postgres
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - "3000:3000"
