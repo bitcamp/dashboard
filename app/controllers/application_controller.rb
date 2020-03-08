@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   before_action :set_raven_context
   after_action  :set_access_control_headers
   after_action  :set_extra_headers
+  after_action  :clear_conn
   # full: true means that the string searched will look for the match anywhere in the "email" string, and not just the beginning
   autocomplete :university, :name, full: true
   autocomplete :major, :name, full: true
@@ -16,6 +17,10 @@ class ApplicationController < ActionController::Base
   autocomplete :prize, :name, full: true
   autocomplete :prize, :criteria, full: true
 
+  def clear_conn
+    ActiveRecord::Base.clear_active_connections!
+    puts "Closed connection"
+  end
 
   wrap_parameters false
 

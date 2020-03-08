@@ -1,4 +1,4 @@
-RUNNING_ID=`docker ps --format '{{.ID}}' -f 'ancestor=dashboard-dashboard'`
+RUNNING_ID=`docker ps --format '{{.ID}}' -f 'ancestor=hackathon-dashboard'`
 if [[ "$RUNNING_ID" == "" ]]; then
     echo Running new container instance
     ./docker_run.sh ${@:-/bin/bash}
