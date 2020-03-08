@@ -196,7 +196,7 @@ Rails.application.routes.draw do
   post 'judging/unassign_tables' => 'judging#unassign_tables'
 
   post 'judging/create_judgement' => 'judging#create', :as => :judgements
-  
+
 
   resources :judging, :only => [:edit], :as => :judgement
   get 'judging/:id', :to => 'judging#show', :as => :judgement
@@ -224,5 +224,6 @@ Rails.application.routes.draw do
   namespace :api do
     root to:'api#index'
     mount_devise_token_auth_for 'User', at: 'auth'
+    get 'lookup' => 'api#lookup_user'
   end
 end

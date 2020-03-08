@@ -12,9 +12,12 @@
 
 ActiveRecord::Schema.define(version: 2020_03_02_194247) do
 
+<<<<<<< HEAD
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+=======
+>>>>>>> cc58f9f23fb70f92a9f3a87ebfcc088a0c2c9209
   create_table "custom_rsvps", force: :cascade do |t|
     t.json "answers"
     t.bigint "user_id"
@@ -240,10 +243,13 @@ ActiveRecord::Schema.define(version: 2020_03_02_194247) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+<<<<<<< HEAD
   add_foreign_key "custom_rsvps", "users"
   add_foreign_key "hardware_checkout_logs", "hardware_items"
   add_foreign_key "hardware_checkout_logs", "users"
   add_foreign_key "hardware_checkouts", "hardware_items"
   add_foreign_key "hardware_checkouts", "users"
   add_foreign_key "mentorship_notifications", "users"
+=======
+>>>>>>> cc58f9f23fb70f92a9f3a87ebfcc088a0c2c9209
 end
