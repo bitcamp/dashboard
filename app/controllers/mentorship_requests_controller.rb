@@ -8,7 +8,7 @@ class MentorshipRequestsController < ApplicationController
 
   def search
     if params[:search].present?
-      if Rails.env.production?
+      if not Rails.env.production?
         @mentorship_requests = MentorshipRequest.joins(:user).where("lower(title) LIKE lower(?) OR
                                                                    lower(status) LIKE lower(?) OR
                                                                    lower(users.first_name) LIKE lower(?) OR
@@ -179,7 +179,7 @@ class MentorshipRequestsController < ApplicationController
     end
 
     def mentor_notifications_with_tech(tech)
-      if not Rails.env.production?
+      if Rails.env.production?
         MentorshipNotification.where("tech::varchar LIKE ?", "%#{tech}%")
       else
         MentorshipNotification.where("tech LIKE ?", "%#{tech}%")

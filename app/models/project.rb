@@ -33,7 +33,7 @@ class Project < ApplicationRecord
 											 size: { less_than: 10.megabyte,
 															 message: 'Image file must be under 10MB in size.' }
 
-	if Rails.env.production?
+	if not Rails.env.production?
 		serialize :tech, Array
 		serialize :prizes, Array
 		serialize :prizes_won, Array

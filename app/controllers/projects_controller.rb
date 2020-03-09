@@ -40,13 +40,13 @@ class ProjectsController < ApplicationController
 
   def public
     if params[:winners]
-      if not Rails.env.production?
+      if Rails.env.production?
         @projects = Project.where("LENGTH(prizes_won::varchar) > ?", 2)
       else
         @projects = Project.where("prizes_won != ?", "[]")
       end
     elsif params[:prize]
-      if not Rails.env.production?
+      if Rails.env.production?
         @projects = Project.where("prizes::varchar LIKE ?", "%#{params[:prize]}%")
       else
         @projects = Project.where("prizes LIKE ?", "%#{params[:prize]}%")
@@ -55,7 +55,7 @@ class ProjectsController < ApplicationController
       @projects = Project.all
     end
 
-    if not Rails.env.production?
+    if Rails.env.production?
       @winners_count = Project.where("LENGTH(prizes_won::varchar) > ?", 2).count
     else
       @winners_count = Project.where("prizes_won != ?", "[]").count

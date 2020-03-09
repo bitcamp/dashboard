@@ -21,7 +21,7 @@ class JudgingController < ApplicationController
       elsif params[:search] == 'status:unjudged'
         @projects = Project.left_outer_joins(:judgements).where("judgements.project_id IS NULL")
       elsif params[:prize]
-        if not Rails.env.production?
+        if Rails.env.production?
           @projects = Project.where("prizes::varchar LIKE ?", "%#{params[:prize]}%")
         else
           @projects = Project.where("prizes LIKE ?", "%#{params[:prize]}%")
